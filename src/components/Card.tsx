@@ -16,8 +16,8 @@ export default class Card extends React.Component<Props, {}> {
 
     render() {
         return <img src={this.cardImageSrc()}
-                    width={100}
-                    height={140}
+                    width={70}
+                    height={98}
                     alt="alternative"
                     onClick={this.handleOnClick.bind(this)}
                     className="cardStyle"
