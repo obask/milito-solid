@@ -1,12 +1,12 @@
 import React from 'react';
 import './css/App.css';
 import initState from "./helpers/initState";
-import GameState from "./milito-entities/game/GameState";
+import GameTableDTO from "./milito-shared/game/GameTableDTO";
 import Hand from "./components/Hand";
 import PlayerTable from "./components/PlayerTable";
 
 interface State {
-    game: GameState
+    game: GameTableDTO
 }
 
 export default class App extends React.Component<{}, State> {

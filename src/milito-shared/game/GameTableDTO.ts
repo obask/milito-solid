@@ -1,14 +1,14 @@
 import PhasesEnum from "../PhasesEnum";
-import IRPlayerState from "./IRPlayerState";
+import PlayerInfoDTO from "./PlayerInfoDTO";
 
-export default class GameState {
+export default class GameTableDTO {
     neutral: [number, number, number, number, number]
     phase: PhasesEnum
-    currentPlayer: IRPlayerState
-    anotherPlayer: IRPlayerState
+    currentPlayer: PlayerInfoDTO
+    anotherPlayer: PlayerInfoDTO
 
 
-    constructor(props: GameState) {
+    constructor(props: GameTableDTO) {
         this.neutral = props.neutral
         this.phase = props.phase
         this.currentPlayer = props.currentPlayer

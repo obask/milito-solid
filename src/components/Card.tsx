@@ -1,10 +1,10 @@
 import React from "react";
-import IRCard from "../milito-entities/game/IRCard";
-import FactionsEnum from "../milito-entities/FactionsEnum";
+import CardDTO from "../milito-shared/game/CardDTO";
+import FactionsEnum from "../milito-shared/FactionsEnum";
 import '../css/Card.css'
 
 interface Props {
-    cardInfo: IRCard
+    cardInfo: CardDTO
     faction: FactionsEnum
 }
 

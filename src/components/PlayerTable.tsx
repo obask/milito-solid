@@ -1,13 +1,13 @@
 import React from "react"
 import '../css/PlayerTable.css'
-import GameState from "../milito-entities/game/GameState"
-import IRCard from "../milito-entities/game/IRCard"
+import GameTableDTO from "../milito-shared/game/GameTableDTO"
+import CardDTO from "../milito-shared/game/CardDTO"
 import PlaceHolder from "./PlaceHolder"
 import Card from "./Card"
-import FactionsEnum from "../milito-entities/FactionsEnum"
+import FactionsEnum from "../milito-shared/FactionsEnum"
 
 interface Props {
-    game: GameState
+    game: GameTableDTO
 }
 
 export default class PlayerTable extends React.Component<Props, {}> {
@@ -68,7 +68,7 @@ export default class PlayerTable extends React.Component<Props, {}> {
         </table>
     }
 
-    private static renderCardOrPlaceholder(faction: FactionsEnum, index: number, card?: IRCard) {
+    private static renderCardOrPlaceholder(faction: FactionsEnum, index: number, card?: CardDTO) {
         if (card === undefined) {
             return <td key={index}><PlaceHolder/></td>
         } else {

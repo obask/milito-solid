@@ -1,12 +1,12 @@
 import React from "react";
-import IRHand from "../milito-entities/game/IRHand";
-import FactionsEnum from "../milito-entities/FactionsEnum";
+import HandDTO from "../milito-shared/game/HandDTO";
+import FactionsEnum from "../milito-shared/FactionsEnum";
 import Card from "./Card";
-import IRCard from "../milito-entities/game/IRCard";
+import CardDTO from "../milito-shared/game/CardDTO";
 import '../css/Hand.css';
 
 interface Props {
-    hand: IRHand
+    hand: HandDTO
     faction: FactionsEnum
 }
 
@@ -18,7 +18,7 @@ export default class Hand extends React.Component<Props, {}> {
         </ul>
     }
 
-    private renderListElement(card: IRCard) {
+    private renderListElement(card: CardDTO) {
         return <li key={card.id}>
             <Card cardInfo={card} faction={this.props.faction}/>
         </li>;
