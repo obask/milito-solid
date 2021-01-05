@@ -4,7 +4,7 @@ import GameTableDTO from "../milito-shared/game/GameTableDTO"
 import CardDTO from "../milito-shared/game/CardDTO"
 import PlaceHolder from "./PlaceHolder"
 import Card from "./Card"
-import FactionsEnum from "../milito-shared/FactionsEnum"
+import FactionsEnum from "../milito-shared/enums/FactionsEnum"
 
 interface Props {
     game: GameTableDTO

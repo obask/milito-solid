@@ -1,9 +1,9 @@
 import GameTableDTO from "../milito-shared/game/GameTableDTO"
-import PhasesEnum from "../milito-shared/PhasesEnum"
+import PhasesEnum from "../milito-shared/enums/PhasesEnum"
 import PlayerInfoDTO from "../milito-shared/game/PlayerInfoDTO"
 import HandDTO from "../milito-shared/game/HandDTO"
 import CardDTO from "../milito-shared/game/CardDTO"
-import FactionsEnum from "../milito-shared/FactionsEnum"
+import FactionsEnum from "../milito-shared/enums/FactionsEnum"
 
 
 export default function initState(): GameTableDTO {

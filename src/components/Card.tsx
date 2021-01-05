@@ -1,6 +1,6 @@
 import React from "react";
 import CardDTO from "../milito-shared/game/CardDTO";
-import FactionsEnum from "../milito-shared/FactionsEnum";
+import FactionsEnum from "../milito-shared/enums/FactionsEnum";
 import '../css/Card.css'
 
 interface Props {

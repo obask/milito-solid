@@ -1,6 +1,6 @@
 import React from "react";
 import HandDTO from "../milito-shared/game/HandDTO";
-import FactionsEnum from "../milito-shared/FactionsEnum";
+import FactionsEnum from "../milito-shared/enums/FactionsEnum";
 import Card from "./Card";
 import CardDTO from "../milito-shared/game/CardDTO";
 import '../css/Hand.css';
