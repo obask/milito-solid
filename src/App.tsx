@@ -4,19 +4,31 @@ import initState from "./helpers/initState";
 import GameTableDTO from "./milito-shared/game/GameTableDTO";
 import Hand from "./components/Hand";
 import PlayerTable from "./components/PlayerTable";
-import CardDTO from "./milito-shared/game/CardDTO";
-// import util from "util";
+import UIState from "./entities/UIState";
+import UIStatusEnum from "./entities/UIStatusEnum";
+
+interface Props {
+}
 
 interface State {
     game: GameTableDTO
+    ui: UIState
 }
 
-export default class App extends React.Component<{}, State> {
-    constructor(props: {}) {
+export default class App extends React.Component<Props, State> {
+    constructor(props: Props) {
         super(props);
         this.state = {
             game: initState(),
+            ui: {
+                status: UIStatusEnum.SELECT_CARDS,
+                discardedCards: [],
+                nCardsToDiscard: 2,
+            },
         }
+        // bind class methods
+        this.clickReset = this.clickReset.bind(this)
+        this.handleClickOnHand = this.handleClickOnHand.bind(this)
     }
 
     render() {
@@ -27,8 +39,9 @@ export default class App extends React.Component<{}, State> {
                 />
                 <Hand hand={this.state.game.currentPlayer.hand}
                       faction={this.state.game.currentPlayer.faction}
+                      onCardSelect={this.handleClickOnHand}
                 />
-                <button onClick={this.clickReset.bind(this)}>SETUP</button>
+                <button onClick={this.clickReset}>SETUP</button>
             </div>
         )
     }
@@ -50,6 +63,57 @@ export default class App extends React.Component<{}, State> {
         body.anotherPlayer.row2 = body.anotherPlayer.row2.map((x) => x ?? undefined)
         this.setState({game: body})
         // alert(util.inspect(body))
+    }
+
+    async handleClickOnHand(position: number) {
+        console.log('STATE:', this.state.ui.status)
+        console.log('clickOnHand triggered:', position)
+        // const requestOptions = {
+        //     method: "POST",
+        //     headers: {"Content-Type": "application/json"},
+        //     body: JSON.stringify({title: "Vue POST Request Example"})
+        // };
+        // fetch("http://localhost:3000/ololo", {mode: 'cors'})
+
+        // fetch("http://localhost:3000/ololo", {mode: 'cors'})
+        //     .then(response => console.log(response.json()))
+        switch (this.state.ui.status) {
+            case UIStatusEnum.SELECT_CARDS:
+                this.setState(previousState => {
+                    previousState.ui.selectedCard = position
+                    previousState.ui.status = UIStatusEnum.SELECT_COLUMN_TO_PLAY_STATE
+                    return previousState
+                })
+                break
+            case UIStatusEnum.DISCARD_CARDS_FROM_HAND:
+                this.setState(currentState => {
+                    currentState.ui.discardedCards.push(position)
+                    currentState.ui.nCardsToDiscard -= 1
+                    currentState.ui.status = UIStatusEnum.DISCARD_CARDS_FROM_HAND
+                    return currentState
+                })
+                // TODO check if here is a race condition
+                console.log("cards to discard", this.state.ui.nCardsToDiscard)
+                if (this.state.ui.nCardsToDiscard <= 0) {
+                    const requestOptions = {
+                        method: "POST",
+                        headers: {"Content-Type": "application/json"},
+                        mode: "cors" as RequestMode,
+                        body: JSON.stringify(this.state)
+                    }
+                    const response = await fetch("http://localhost:3000/ololo", requestOptions)
+                    const newState = await response.json()
+                    console.log(newState)
+                    this.setState({
+                        game: newState
+                    })
+                    this.setState(currentState => {
+                        currentState.ui.status = UIStatusEnum.SELECT_CARDS_STATE
+                        return currentState
+                    })
+                }
+                break
+        }
     }
 
 }
