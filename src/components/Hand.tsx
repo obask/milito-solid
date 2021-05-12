@@ -8,7 +8,7 @@ import '../css/Hand.css';
 interface Props {
     hand: HandDTO
     faction: FactionsEnum
-    onCardSelect: Function
+    onCardSelect: (a: CardDTO, b: number) => void
 }
 
 export default class Hand extends React.Component<Props, {}> {
@@ -19,10 +19,15 @@ export default class Hand extends React.Component<Props, {}> {
         </ul>
     }
 
-    private renderListElement(card: CardDTO) {
-        return <li key={card.id} onClick={this.props.onCardSelect}>
+    private renderListElement(card: CardDTO, position: number) {
+        return <li key={card.id} onClick={() => {this.props.onCardSelect(card, position)}}>
             <Card cardInfo={card} faction={this.props.faction}
             />
         </li>;
     }
+
+    // private clickReset(event: React.MouseEvent<HTMLElement>) {
+    //     this.props.onCardSelect()
+    // }
+
 }

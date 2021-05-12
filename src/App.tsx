@@ -6,6 +6,7 @@ import Hand from "./components/Hand";
 import PlayerTable from "./components/PlayerTable";
 import UIState from "./entities/UIState";
 import UIStatusEnum from "./entities/UIStatusEnum";
+import CardDTO from "./milito-shared/game/CardDTO";
 
 interface Props {
 }
@@ -28,6 +29,7 @@ export default class App extends React.Component<Props, State> {
         }
         // bind class methods
         this.clickReset = this.clickReset.bind(this)
+        this.clickDiscard = this.clickDiscard.bind(this)
         this.handleClickOnHand = this.handleClickOnHand.bind(this)
     }
 
@@ -42,8 +44,32 @@ export default class App extends React.Component<Props, State> {
                       onCardSelect={this.handleClickOnHand}
                 />
                 <button onClick={this.clickReset}>SETUP</button>
+                <button onClick={this.clickDiscard}>DISCARD</button>
             </div>
         )
+    }
+
+    async clickDiscard(event: React.MouseEvent<HTMLButtonElement>) {
+        const selectedCardId = this.state.ui.selectedCard
+        const requestOptions = {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            mode: "cors" as RequestMode,
+            body: JSON.stringify({DISCARD_EVENT: {discardedCardId: selectedCardId}}),
+        }
+        const tmp = await fetch("http://localhost:9000/api/game/event", requestOptions)
+        const body: GameTableDTO = await tmp.json()
+        console.log(body)
+        this.replaceResponseNullValues(body)
+        this.setState({game: body})
+        // alert(util.inspect(body))
+    }
+
+    private replaceResponseNullValues(body: GameTableDTO) {
+        body.currentPlayer.row1 = body.currentPlayer.row1.map((x) => x ?? undefined)
+        body.currentPlayer.row2 = body.currentPlayer.row2.map((x) => x ?? undefined)
+        body.anotherPlayer.row1 = body.anotherPlayer.row1.map((x) => x ?? undefined)
+        body.anotherPlayer.row2 = body.anotherPlayer.row2.map((x) => x ?? undefined)
     }
 
     async clickReset(event: React.MouseEvent<HTMLButtonElement>) {
@@ -57,15 +83,14 @@ export default class App extends React.Component<Props, State> {
         const body: GameTableDTO = await tmp.json()
         console.log(body)
         // replace all null values
-        body.currentPlayer.row1 = body.currentPlayer.row1.map((x) => x ?? undefined)
-        body.currentPlayer.row2 = body.currentPlayer.row2.map((x) => x ?? undefined)
-        body.anotherPlayer.row1 = body.anotherPlayer.row1.map((x) => x ?? undefined)
-        body.anotherPlayer.row2 = body.anotherPlayer.row2.map((x) => x ?? undefined)
+        this.replaceResponseNullValues(body)
         this.setState({game: body})
         // alert(util.inspect(body))
     }
 
-    async handleClickOnHand(position: number) {
+    async handleClickOnHand(card: CardDTO, position: number) {
+        // alert("OLOLO: " + position)
+
         console.log('STATE:', this.state.ui.status)
         console.log('clickOnHand triggered:', position)
         // const requestOptions = {

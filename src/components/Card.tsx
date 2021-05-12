@@ -25,7 +25,8 @@ export default class Card extends React.Component<Props, {}> {
     }
 
     private handleOnClick() {
-        window.alert(`clicked: ${this.props.cardInfo.unitType}`)
+        // window.alert(`clicked: ${this.props.cardInfo.unitType}`)
+        console.log("clicked on a card")
     }
 
 }
