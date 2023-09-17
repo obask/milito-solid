@@ -1,0 +1,12 @@
+.playertablecard {
+    display: inline-block;
+    position: relative;
+    /*margin-top: 2px;*/
+    margin-left: 38px;
+    width: 70px;
+    height: 98px;
+    /*background-color: dimgrey;*/
+    border-width: 2px;
+    border-color: rebeccapurple;
+    border-style: dashed;
+}
