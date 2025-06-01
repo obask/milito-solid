@@ -1,14 +1,17 @@
-import './assets/main.css'
+import { createApp } from "vue";
+import { createPinia } from "pinia";
+import App from "./App.vue";
+// import store from "./publicStore";
+import IRPlayerState from "@milito-entities/IRPlayerState";
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+const app = createApp(App);
+const pinia = createPinia();
+app.use(pinia);
+app.mount("#app");
 
-import App from './App.vue'
-import router from './router'
+console.log("OLOLO1");
 
-const app = createApp(App)
+// @ts-ignore
+console.log(app)
 
-app.use(createPinia())
-app.use(router)
-
-app.mount('#app')
+// Removed window.store = store, as Pinia will now be used

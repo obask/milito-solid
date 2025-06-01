@@ -1,85 +1,60 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <div id="app">
+    <Card
+        :cardInfo="this.cardI"
+        :faction="this.fact"
+    />
+<!--        style="transform: rotate(180deg)"
+-->
+    <PlayerTables :table="table" />
+    <Hand :hand="hand" :faction="fact" />
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+<script lang="ts">
+import {Options, Vue} from "vue-class-component";
+import Hand from "./components/Hand.vue";
+import PlayerTables from "./components/PlayerTable.vue";
+import HelloWorld from "./components/HelloWorld.vue";
+import Card from "./components/Card.vue";
+import { usePlayerStore } from "@/publicStore";
+import IRCard from "./milito-entities/IRCard"
+import FactionsEnum from "./milito-entities/FactionsEnum";
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+@Options({
+  components: {
+    PlayerTables,
+    HelloWorld,
+    Hand,
+    Card,
+  },
+  data() {
+    const playerStore = usePlayerStore();
+    return {
+      msg1: "Welcome to Milito!",
+      myImage: require("@/assets/ancient_british/ab_warband_medium_infantry.jpeg"),
+      cardI: new IRCard({unitType: 'light_cavalry'}),
+      fact: FactionsEnum.AncientBritish,
+      playerStore,
+    }
   }
-
-  .logo {
-    margin: 0 2rem 0 0;
+})
+export default class App extends Vue {
+  get table() {
+    return this.playerStore.playerState.table;
   }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+  get hand() {
+    return { cards: this.playerStore.playerState.hand };
   }
+}
+</script>
 
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /*text-align: center;*/
+  color: rebeccapurple;
 }
 </style>
