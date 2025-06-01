@@ -11,7 +11,7 @@ interface Props {
 export default class Card extends React.Component<Props, {}> {
 
     private cardImageSrc(): string {
-        return `${process.env.PUBLIC_URL}/${this.props.faction}/${this.props.cardInfo.unitType}.jpeg`
+        return `/${this.props.faction}/${this.props.cardInfo.unitType}.jpeg`;
     }
 
     render() {
