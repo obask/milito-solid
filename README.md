@@ -4,6 +4,12 @@
 $ bun install # or pnpm install
 ```
 
+✅ When you just cloned a repository with submodules:
+`git clone --recurse-submodules <repo_url>`
+
+Or if you already cloned it without the flag:
+`git submodule update --init --recursive`
+
 ### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
 
 ## Available Scripts
